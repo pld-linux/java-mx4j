@@ -1,4 +1,5 @@
 Summary:        Open source implementation of JMX Java API
+Summary(pl):	Implementacja API Javy JMX z otwartymi ¼ród³ami
 Name:           mx4j
 Version:        1.1.1
 Release:        0.1
@@ -21,17 +22,21 @@ BuildRequires:	jsse >= 1.0.2
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	junit >= 3.8
 BuildRequires:	jaxp_transform_impl
-Buildarch:      noarch
-Obsoletes:      openjmx
+Requires:	jre
 Provides:	jmxri
+Obsoletes:      openjmx
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_javalibdir	%{_datadir}/java
 
 %description
-OpenJMX is an open source implementation of the
-Java(TM) Management Extensions (JMX).
+OpenJMX is an open source implementation of the Java(TM) Management
+Extensions (JMX).
+
+%description -l pl
+OpenJMX to implementacja standardu JMX (Java(TM) Management
+Extensions) z otwartymi ¼ród³ami.
 
 %prep
 %setup -q -n %{name}
