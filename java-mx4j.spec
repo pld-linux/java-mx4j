@@ -71,7 +71,7 @@ ant jars javadocs docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javalibdir}
+install -d $RPM_BUILD_ROOT%{_javadir}
 cp dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}
 cp dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}
 cp dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}
