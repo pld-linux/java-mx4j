@@ -1,3 +1,7 @@
+#
+# TODO:
+#		- update to 2.0.1
+#
 Summary:	Open source implementation of JMX Java API
 Summary(pl):	Implementacja API Javy JMX z otwartymi ¼ród³ami
 Name:		mx4j
@@ -27,8 +31,6 @@ Obsoletes:	openjmx
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_javalibdir	%{_datadir}/java
-
 %description
 OpenJMX is an open source implementation of the Java(TM) Management
 Extensions (JMX).
@@ -42,18 +44,18 @@ Extensions) z otwartymi ¼ród³ami.
 find lib -type f ! -name "xdoclet*.jar" ! -name "docbook*.*" ! -name "xjavadoc*.jar" -exec rm -f \{\} \;
 
 %build
-CLASSPATH=%{_javalibdir}/activation.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/mailapi.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/smtp.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/jython.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/commons-logging.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/xml-commons-apis.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/bcel.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/jsse.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/jce.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/log4j.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/junit.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/jaxp_transform_impl.jar
+CLASSPATH=%{_javadir}/activation.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/mailapi.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/smtp.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/jython.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/commons-logging.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/xml-commons-apis.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/bcel.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/jsse.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/jce.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/log4j.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/junit.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/jaxp_transform_impl.jar
 
 #ln -sf %{_javalibdir}/commons-logging.jar lib/
 #ln -sf %{_javalibdir}/mail.jar lib/
@@ -70,12 +72,12 @@ ant jars javadocs docs
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javalibdir}
-cp dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javalibdir}
-cp dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javalibdir}
-cp dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javalibdir}
-ln -sf %{name}-actions.jar $RPM_BUILD_ROOT%{_javalibdir}/%{name}-actions-%{version}.jar
-ln -sf %{name}-jmx.jar $RPM_BUILD_ROOT%{_javalibdir}/%{name}-jmx-%{version}.jar
-ln -sf %{name}-tools.jar $RPM_BUILD_ROOT%{_javalibdir}/%{name}-tools-%{version}.jar
+cp dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}
+cp dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}
+cp dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}
+ln -sf %{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions-%{version}.jar
+ln -sf %{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
+ln -sf %{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -83,4 +85,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc dist/docs
-%{_javalibdir}/*.jar
+%{_javadir}/*.jar
