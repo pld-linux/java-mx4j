@@ -21,7 +21,6 @@ BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jsse >= 1.0.2
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	junit >= 3.8
-BuildRequires:	jaxp_transform_impl
 Requires:	jre
 Provides:	jmxri
 Obsoletes:	openjmx
