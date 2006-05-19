@@ -14,7 +14,7 @@ Group:		Development/Languages/Java
 # So, we'll use a snap from jpp (probably a cvs snapshot).
 Source0:	%{name}-%{version}jpp.tar.gz
 URL:		http://mx4j.sf.net/
-BuildRequires:	jakarta-ant
+BuildRequires:	ant
 BuildRequires:	jaf
 BuildRequires:	javamail >= 1.2
 BuildRequires:	jython >= 2.1
