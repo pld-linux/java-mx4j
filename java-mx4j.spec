@@ -13,18 +13,18 @@ Group:		Development/Languages/Java
 # File http://dl.sf.net/%{name}/%{name}-%{version}.tar.gz have unusable sources!
 # So, we'll use a snap from jpp (probably a cvs snapshot).
 Source0:	%{name}-%{version}jpp.tar.gz
-URL:		http://mx4j.sf.net/
+URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant
 BuildRequires:	jaf
-BuildRequires:	javamail >= 1.2
-BuildRequires:	jython >= 2.1
-BuildRequires:	jakarta-log4j >= 1.2.7
-BuildRequires:	jakarta-commons-logging >= 1.0.1
-BuildRequires:	xml-commons
 BuildRequires:	jakarta-bcel >= 5.0
-BuildRequires:	jsse >= 1.0.2
+BuildRequires:	jakarta-commons-logging >= 1.0.1
+BuildRequires:	jakarta-log4j >= 1.2.7
+BuildRequires:	javamail >= 1.2
 BuildRequires:	jce >= 1.2.2
+BuildRequires:	jsse >= 1.0.2
 BuildRequires:	junit >= 3.8
+BuildRequires:	jython >= 2.1
+BuildRequires:	xml-commons
 Requires:	jre
 Provides:	jmxri
 Obsoletes:	openjmx
