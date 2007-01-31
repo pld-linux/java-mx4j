@@ -1,4 +1,3 @@
-#
 # TODO:
 #		- update to 2.0.1
 #
@@ -13,17 +12,21 @@ Group:		Development/Languages/Java
 # File http://dl.sf.net/%{name}/%{name}-%{version}.tar.gz have unusable sources!
 # So, we'll use a snap from jpp (probably a cvs snapshot).
 Source0:	%{name}-%{version}jpp.tar.gz
+# Source0-md5:	ec2413473675f67a17e9819d78343d84
 URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant
+BuildRequires:	ant-trax
 BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jakarta-commons-logging >= 1.0.1
 BuildRequires:	jakarta-log4j >= 1.2.7
 BuildRequires:	javamail >= 1.2
 BuildRequires:	jce >= 1.2.2
+BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.2
 BuildRequires:	junit >= 3.8
 BuildRequires:	jython >= 2.1
+BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	xml-commons
 Requires:	jre
 Provides:	jmxri
@@ -41,21 +44,27 @@ Extensions) z otwartymi ¼ród³ami.
 
 %prep
 %setup -q -n %{name}
-find lib -type f ! -name "xdoclet*.jar" ! -name "docbook*.*" ! -name "xjavadoc*.jar" -exec rm -f \{\} \;
+find lib -type f ! -name "xdoclet*.jar" ! -name "docbook*.*" ! -name "xjavadoc*.jar" -exec rm -f {} ';'
 
 %build
-CLASSPATH=%{_javadir}/activation.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/mailapi.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/smtp.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/jython.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/commons-logging.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/xml-commons-apis.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/bcel.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/jsse.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/jce.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/log4j.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/junit.jar
-CLASSPATH=$CLASSPATH:%{_javadir}/jaxp_transform_impl.jar
+export JAVA_HOME="%{java_home}"
+
+required_jars="\
+activation \
+mailapi.jar \
+smtp \
+jython \
+commons-logging \
+xml-commons-apis \
+bcel \
+jsse \
+jce \
+log4j \
+junit \
+jaxp_transform_impl \
+"
+
+export CLASSPATH=$(/usr/bin/build-classpath $required_jars)
 
 #ln -sf %{_javalibdir}/commons-logging.jar lib/
 #ln -sf %{_javalibdir}/mail.jar lib/
@@ -67,7 +76,7 @@ CLASSPATH=$CLASSPATH:%{_javadir}/jaxp_transform_impl.jar
 #ln -sf xdoclet-cvs20021028-patched.jar lib/xdoclet-mx4j-module.jar
 
 cd build
-ant jars javadocs docs
+%ant jars javadocs docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
