@@ -9,7 +9,7 @@ Summary:	Open source implementation of JMX Java API
 Summary(pl):	Implementacja API Javy JMX z otwartymi ¼ród³ami
 Name:		mx4j
 Version:	1.1.1
-Release:	0.1
+Release:	0.2
 Epoch:		0
 License:	Apache License
 Group:		Development/Languages/Java
@@ -87,7 +87,7 @@ export JAVA_HOME="%{java_home}"
 required_jars="\
 activation \
 mailapi.jar \
-smtp \
+javamail/smtp \
 jython \
 commons-logging \
 xml-commons-apis \
@@ -124,8 +124,10 @@ ln -sf %{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
 ln -sf %{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
 
 # javadoc
+%if %{with doc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -141,9 +143,10 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc dist/docs
 %{_javadir}/*.jar
 
+%if %{with doc}
 %files javadoc
 %defattr(644,root,root,755)
 %{_javadocdir}/%{name}-%{version}
+%endif
