@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	doc	# build docs (broken)
+#
 # TODO:
 #		- update to 2.0.1
 #
@@ -42,6 +46,37 @@ Extensions (JMX).
 OpenJMX to implementacja standardu JMX (Java(TM) Management
 Extensions) z otwartymi ¼ród³ami.
 
+%package doc
+Summary:	Manual for %{name}
+Summary(fr):	Documentation pour %{name}
+Summary(it):	Documentazione di %{name}
+Summary(pl):	Podrêcznik dla %{name}a
+Group:		Development/Languages/Java
+
+%description doc
+Documentation for %{name}.
+
+%description doc -l fr
+Documentation pour %{name}.
+
+%description doc -l it
+Documentazione di %{name}.
+
+%description doc -l pl
+Dokumentacja do %{name}a.
+
+%package javadoc
+Summary:	Online manual for %{name}
+Summary(pl):	Dokumentacja online do %{name}
+Group:		Documentation
+Requires:	jpackage-utils
+
+%description javadoc
+Documentation for %{name} -
+
+%description javadoc -l pl
+Dokumentacja do %{name}a -
+
 %prep
 %setup -q -n %{name}
 find lib -type f ! -name "xdoclet*.jar" ! -name "docbook*.*" ! -name "xjavadoc*.jar" -exec rm -f {} ';'
@@ -76,7 +111,7 @@ export CLASSPATH=$(/usr/bin/build-classpath $required_jars)
 #ln -sf xdoclet-cvs20021028-patched.jar lib/xdoclet-mx4j-module.jar
 
 cd build
-%ant jars javadocs docs
+%ant jars %{?with_docs:javadocs docs}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -88,10 +123,27 @@ ln -sf %{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions-%{version}
 ln -sf %{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
 ln -sf %{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
 
+# javadoc
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post javadoc
+rm -f %{_javadocdir}/%{name}
+ln -s %{name}-%{version} %{_javadocdir}/%{name}
+
+%postun javadoc
+if [ "$1" = "0" ]; then
+	rm -f %{_javadocdir}/%{name}
+fi
 
 %files
 %defattr(644,root,root,755)
 %doc dist/docs
 %{_javadir}/*.jar
+
+%files javadoc
+%defattr(644,root,root,755)
+%{_javadocdir}/%{name}-%{version}
