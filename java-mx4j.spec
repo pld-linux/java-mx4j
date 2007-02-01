@@ -50,7 +50,7 @@ Extensions) z otwartymi ¼ród³ami.
 Summary:	Manual for %{name}
 Summary(fr):	Documentation pour %{name}
 Summary(it):	Documentazione di %{name}
-Summary(pl):	Podrêcznik dla %{name}a
+Summary(pl):	Podrêcznik dla %{name}
 Group:		Development/Languages/Java
 
 %description doc
@@ -63,7 +63,7 @@ Documentation pour %{name}.
 Documentazione di %{name}.
 
 %description doc -l pl
-Dokumentacja do %{name}a.
+Dokumentacja do %{name}.
 
 %package javadoc
 Summary:	Online manual for %{name}
@@ -72,10 +72,10 @@ Group:		Documentation
 Requires:	jpackage-utils
 
 %description javadoc
-Documentation for %{name} -
+Javadoc documentation for %{name}.
 
 %description javadoc -l pl
-Dokumentacja do %{name}a -
+Dokumentacja javadoc do %{name}.
 
 %prep
 %setup -q -n %{name}
