@@ -6,7 +6,7 @@
 #		- update to 2.0.1
 #
 Summary:	Open source implementation of JMX Java API
-Summary(pl):	Implementacja API Javy JMX z otwartymi ¼ród³ami
+Summary(pl.UTF-8):   Implementacja API Javy JMX z otwartymi ÅºrÃ³dÅ‚ami
 Name:		mx4j
 Version:	1.1.1
 Release:	0.2
@@ -42,39 +42,39 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 OpenJMX is an open source implementation of the Java(TM) Management
 Extensions (JMX).
 
-%description -l pl
+%description -l pl.UTF-8
 OpenJMX to implementacja standardu JMX (Java(TM) Management
-Extensions) z otwartymi ¼ród³ami.
+Extensions) z otwartymi ÅºrÃ³dÅ‚ami.
 
 %package doc
 Summary:	Manual for %{name}
-Summary(fr):	Documentation pour %{name}
-Summary(it):	Documentazione di %{name}
-Summary(pl):	Podrêcznik dla %{name}
+Summary(fr.UTF-8):   Documentation pour %{name}
+Summary(it.UTF-8):   Documentazione di %{name}
+Summary(pl.UTF-8):   PodrÄ™cznik dla %{name}
 Group:		Development/Languages/Java
 
 %description doc
 Documentation for %{name}.
 
-%description doc -l fr
+%description doc -l fr.UTF-8
 Documentation pour %{name}.
 
-%description doc -l it
+%description doc -l it.UTF-8
 Documentazione di %{name}.
 
-%description doc -l pl
+%description doc -l pl.UTF-8
 Dokumentacja do %{name}.
 
 %package javadoc
 Summary:	Online manual for %{name}
-Summary(pl):	Dokumentacja online do %{name}
+Summary(pl.UTF-8):   Dokumentacja online do %{name}
 Group:		Documentation
 Requires:	jpackage-utils
 
 %description javadoc
 Javadoc documentation for %{name}.
 
-%description javadoc -l pl
+%description javadoc -l pl.UTF-8
 Dokumentacja javadoc do %{name}.
 
 %prep
