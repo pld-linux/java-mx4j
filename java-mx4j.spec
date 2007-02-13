@@ -6,7 +6,7 @@
 #		- update to 2.0.1
 #
 Summary:	Open source implementation of JMX Java API
-Summary(pl.UTF-8):   Implementacja API Javy JMX z otwartymi źródłami
+Summary(pl.UTF-8):	Implementacja API Javy JMX z otwartymi źródłami
 Name:		mx4j
 Version:	1.1.1
 Release:	0.2
@@ -48,9 +48,9 @@ Extensions) z otwartymi źródłami.
 
 %package doc
 Summary:	Manual for %{name}
-Summary(fr.UTF-8):   Documentation pour %{name}
-Summary(it.UTF-8):   Documentazione di %{name}
-Summary(pl.UTF-8):   Podręcznik dla %{name}
+Summary(fr.UTF-8):	Documentation pour %{name}
+Summary(it.UTF-8):	Documentazione di %{name}
+Summary(pl.UTF-8):	Podręcznik dla %{name}
 Group:		Development/Languages/Java
 
 %description doc
@@ -67,7 +67,7 @@ Dokumentacja do %{name}.
 
 %package javadoc
 Summary:	Online manual for %{name}
-Summary(pl.UTF-8):   Dokumentacja online do %{name}
+Summary(pl.UTF-8):	Dokumentacja online do %{name}
 Group:		Documentation
 Requires:	jpackage-utils
 
