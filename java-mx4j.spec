@@ -23,13 +23,13 @@ BuildRequires:	ant-trax
 BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jakarta-commons-logging >= 1.0.1
-BuildRequires:	jakarta-log4j >= 1.2.7
 BuildRequires:	javamail >= 1.2
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.2
 BuildRequires:	junit >= 3.8
 BuildRequires:	jython >= 2.1
+BuildRequires:	logging-log4j >= 1.2.7
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	xml-commons
 Requires:	jre
