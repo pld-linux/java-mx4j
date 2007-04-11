@@ -2,21 +2,18 @@
 # Conditional build:
 %bcond_with	doc	# build docs (broken)
 #
-# TODO:
-#		- update to 2.0.1
-#
 Summary:	Open source implementation of JMX Java API
 Summary(pl.UTF-8):	Implementacja API Javy JMX z otwartymi źródłami
 Name:		mx4j
-Version:	1.1.1
-Release:	0.2
+Version:	3.0.2
+Release:	0.1
 Epoch:		0
 License:	Apache License
 Group:		Development/Languages/Java
 # File http://dl.sf.net/%{name}/%{name}-%{version}.tar.gz have unusable sources!
 # So, we'll use a snap from jpp (probably a cvs snapshot).
-Source0:	%{name}-%{version}jpp.tar.gz
-# Source0-md5:	ec2413473675f67a17e9819d78343d84
+Source0:	http://dl.sourceforge.net/mx4j/%{name}-%{version}-src.tar.gz
+# Source0-md5:	1c01f620c21efb0a84c3105c064b9047
 URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant
 BuildRequires:	ant-trax
@@ -78,8 +75,7 @@ Javadoc documentation for %{name}.
 Dokumentacja javadoc do %{name}.
 
 %prep
-%setup -q -n %{name}
-find lib -type f ! -name "xdoclet*.jar" ! -name "docbook*.*" ! -name "xjavadoc*.jar" -exec rm -f {} ';'
+%setup -q
 
 %build
 export JAVA_HOME="%{java_home}"
