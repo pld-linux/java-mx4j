@@ -10,8 +10,6 @@ Release:	0.1
 Epoch:		0
 License:	Apache License
 Group:		Development/Languages/Java
-# File http://dl.sf.net/%{name}/%{name}-%{version}.tar.gz have unusable sources!
-# So, we'll use a snap from jpp (probably a cvs snapshot).
 Source0:	http://dl.sourceforge.net/mx4j/%{name}-%{version}-src.tar.gz
 # Source0-md5:	1c01f620c21efb0a84c3105c064b9047
 URL:		http://mx4j.sourceforge.net/
