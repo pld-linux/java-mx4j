@@ -2,11 +2,12 @@
 # Conditional build:
 %bcond_with	doc	# build docs (broken)
 #
+%include	/usr/lib/rpm/macros.java
 Summary:	Open source implementation of JMX Java API
 Summary(pl.UTF-8):	Implementacja API Javy JMX z otwartymi źródłami
 Name:		mx4j
 Version:	3.0.2
-Release:	0.1
+Release:	0.2
 Epoch:		0
 License:	Apache License
 Group:		Development/Languages/Java
@@ -15,6 +16,7 @@ Source0:	http://dl.sourceforge.net/mx4j/%{name}-%{version}-src.tar.gz
 URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant
 BuildRequires:	ant-trax
+BuildRequires:	axis
 BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jakarta-commons-logging >= 1.0.1
@@ -22,6 +24,7 @@ BuildRequires:	javamail >= 1.2
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.2
+BuildRequires:	rpm-javaprov
 BuildRequires:	junit >= 3.8
 BuildRequires:	jython >= 2.1
 BuildRequires:	logging-log4j >= 1.2.7
@@ -46,7 +49,7 @@ Summary:	Manual for %{name}
 Summary(fr.UTF-8):	Documentation pour %{name}
 Summary(it.UTF-8):	Documentazione di %{name}
 Summary(pl.UTF-8):	Podręcznik dla %{name}
-Group:		Development/Languages/Java
+Group:		Documentation
 
 %description doc
 Documentation for %{name}.
@@ -76,8 +79,6 @@ Dokumentacja javadoc do %{name}.
 %setup -q
 
 %build
-export JAVA_HOME="%{java_home}"
-
 required_jars="\
 activation \
 mailapi.jar \
@@ -93,7 +94,7 @@ junit \
 jaxp_transform_impl \
 "
 
-export CLASSPATH=$(/usr/bin/build-classpath $required_jars)
+export CLASSPATH=$(build-classpath $required_jars)
 
 #ln -sf %{_javalibdir}/commons-logging.jar lib/
 #ln -sf %{_javalibdir}/mail.jar lib/
@@ -105,35 +106,30 @@ export CLASSPATH=$(/usr/bin/build-classpath $required_jars)
 #ln -sf xdoclet-cvs20021028-patched.jar lib/xdoclet-mx4j-module.jar
 
 cd build
-%ant jars %{?with_docs:javadocs docs}
+%ant main %{?with_docs:javadocs docs}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-cp dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}
-cp dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}
-cp dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}
-ln -sf %{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions-%{version}.jar
-ln -sf %{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
-ln -sf %{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
+cp -a dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions-%{version}.jar
+cp -a dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
+cp -a dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
+ln -sf %{name}-actions-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions.jar
+ln -sf %{name}-jmx-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx.jar
+ln -sf %{name}-tools-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools.jar
 
 # javadoc
 %if %{with doc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-	rm -f %{_javadocdir}/%{name}
-fi
+ln -sf %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
@@ -143,4 +139,5 @@ fi
 %files javadoc
 %defattr(644,root,root,755)
 %{_javadocdir}/%{name}-%{version}
+%ghost %{_javadocdir}/%{name}
 %endif
