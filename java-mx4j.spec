@@ -9,7 +9,7 @@ Name:		mx4j
 Version:	3.0.2
 Release:	0.2
 Epoch:		0
-License:	Apache License
+License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/mx4j/%{name}-%{version}-src.tar.gz
 # Source0-md5:	1c01f620c21efb0a84c3105c064b9047
