@@ -3,24 +3,29 @@
 %bcond_with	doc	# build docs (broken)
 #
 %include	/usr/lib/rpm/macros.java
+#
+%define		srcname	mx4j
 Summary:	Open source implementation of JMX Java API
 Summary(pl.UTF-8):	Implementacja API Javy JMX z otwartymi źródłami
-Name:		mx4j
+Name:		java-mx4j
 Version:	3.0.2
 Release:	0.2
 Epoch:		0
 License:	Apache
 Group:		Development/Languages/Java
-Source0:	http://dl.sourceforge.net/mx4j/%{name}-%{version}-src.tar.gz
+Source0:	http://dl.sourceforge.net/mx4j/%{srcname}-%{version}-src.tar.gz
 # Source0-md5:	1c01f620c21efb0a84c3105c064b9047
+Patch0:		java-mx4j-sourcetarget.patch
 URL:		http://mx4j.sourceforge.net/
-BuildRequires:	ant
+BuildRequires:	ant >= 1.7
 BuildRequires:	ant-trax
-BuildRequires:	axis
+# BuildRequires:	axis
 BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jakarta-commons-logging >= 1.0.1
 BuildRequires:	javamail >= 1.2
+BuildRequires:	java-gcj-compat-devel
+BuildRequires:	java-hessian
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.2
@@ -30,7 +35,6 @@ BuildRequires:	jython >= 2.1
 BuildRequires:	logging-log4j >= 1.2.7
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	xml-commons
-Requires:	jre
 Provides:	jmxri
 Obsoletes:	openjmx
 BuildArch:	noarch
@@ -80,9 +84,9 @@ Dokumentacja javadoc do %{name}.
 
 %build
 required_jars="\
+axis \
 activation \
-mailapi.jar \
-javamail/smtp \
+mail \
 jython \
 commons-logging \
 xml-commons-apis \
@@ -92,9 +96,16 @@ jce \
 log4j \
 junit \
 jaxp_transform_impl \
+tools \
+ecj \
+libgcj \
+servlet \
+hessian \
+glibj
 "
 
-export CLASSPATH=$(build-classpath $required_jars)
+CLASSPATH=$(build-classpath $required_jars)
+export CLASSPATH
 
 #ln -sf %{_javalibdir}/commons-logging.jar lib/
 #ln -sf %{_javalibdir}/mail.jar lib/
@@ -111,25 +122,25 @@ cd build
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-cp -a dist/lib/%{name}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions-%{version}.jar
-cp -a dist/lib/%{name}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx-%{version}.jar
-cp -a dist/lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
-ln -sf %{name}-actions-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-actions.jar
-ln -sf %{name}-jmx-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jmx.jar
-ln -sf %{name}-tools-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools.jar
+cp -a dist/lib/%{srcname}-actions.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-actions-%{version}.jar
+cp -a dist/lib/%{srcname}-jmx.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-jmx-%{version}.jar
+cp -a dist/lib/%{srcname}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-tools-%{version}.jar
+ln -sf %{srcname}-actions-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-actions.jar
+ln -sf %{srcname}-jmx-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-jmx.jar
+ln -sf %{srcname}-tools-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-tools.jar
 
 # javadoc
 %if %{with doc}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 %endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-ln -sf %{name}-%{version} %{_javadocdir}/%{name}
+ln -sf %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
@@ -138,6 +149,6 @@ ln -sf %{name}-%{version} %{_javadocdir}/%{name}
 %if %{with doc}
 %files javadoc
 %defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
 %endif
