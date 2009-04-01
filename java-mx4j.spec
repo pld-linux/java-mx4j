@@ -20,29 +20,31 @@ License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://dl.sourceforge.net/mx4j/%{srcname}-%{version}-src.tar.gz
 # Source0-md5:	1c01f620c21efb0a84c3105c064b9047
-Patch0:		java-mx4j-sourcetarget.patch
+Patch0:		%{name}-sourcetarget.patch
 URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant >= 1.7
 BuildRequires:	ant-trax
-# BuildRequires:	axis
+BuildRequires:	axis
 BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
-BuildRequires:	jakarta-commons-logging >= 1.0.1
-BuildRequires:	javamail >= 1.2
+BuildRequires:	java-commons-logging >= 1.0.1
 BuildRequires:	java-gcj-compat-devel
 %{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
-#%%{!?with_java_sun:BuildRequires:        java-gnu-classpath}
-%{?with_java_sun:BuildRequires: java-sun}
+%{!?with_java_sun:BuildRequires:        java-gnu-classpath}
 BuildRequires:	java-hessian
+BuildRequires:	java-junit >= 3.8
+BuildRequires:	java-log4j >= 1.2.7
+%{?with_java_sun:BuildRequires: java-sun}
+BuildRequires:	java-xml-commons
+BuildRequires:	javamail >= 1.2
+BuildRequires:	jaxp_transform_impl
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.2
-BuildRequires:	rpm-javaprov
-BuildRequires:	junit >= 3.8
 BuildRequires:	jython >= 2.1
-BuildRequires:	logging-log4j >= 1.2.7
+BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	xml-commons
+BuildRequires:	servlet
 Provides:	jmxri
 Obsoletes:	openjmx
 BuildArch:	noarch
@@ -88,7 +90,7 @@ Javadoc documentation for %{name}.
 Dokumentacja javadoc do %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{srcname}-%{version}
 
 %build
 required_jars="\
@@ -104,13 +106,11 @@ jce \
 log4j \
 junit \
 jaxp_transform_impl \
-tools \
-ecj \
-libgcj \
 servlet \
 hessian \
-glibj
 "
+
+%{!?with_java_sun:requires_jars=$required_jars glibj}
 
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
