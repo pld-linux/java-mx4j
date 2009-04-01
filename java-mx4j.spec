@@ -1,9 +1,14 @@
 #
 # Conditional build:
 %bcond_with	doc	# build docs (broken)
-#
+%if "%{pld_release}" == "ti"
+%bcond_without java_sun        # build with gcj
+%else
+%bcond_with    java_sun        # build with java-sun
+%endif
+
 %include	/usr/lib/rpm/macros.java
-#
+
 %define		srcname	mx4j
 Summary:	Open source implementation of JMX Java API
 Summary(pl.UTF-8):	Implementacja API Javy JMX z otwartymi źródłami
@@ -25,6 +30,9 @@ BuildRequires:	jakarta-bcel >= 5.0
 BuildRequires:	jakarta-commons-logging >= 1.0.1
 BuildRequires:	javamail >= 1.2
 BuildRequires:	java-gcj-compat-devel
+%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
+#%%{!?with_java_sun:BuildRequires:        java-gnu-classpath}
+%{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-hessian
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
