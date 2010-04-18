@@ -1,11 +1,6 @@
 #
 # Conditional build:
 %bcond_with	doc	# build docs (broken)
-%if "%{pld_release}" == "ti"
-%bcond_without java_sun        # build with gcj
-%else
-%bcond_with    java_sun        # build with java-sun
-%endif
 
 %include	/usr/lib/rpm/macros.java
 
@@ -18,33 +13,32 @@ Release:	0.2
 Epoch:		0
 License:	Apache
 Group:		Development/Languages/Java
-Source0:	http://dl.sourceforge.net/mx4j/%{srcname}-%{version}-src.tar.gz
+Source0:	http://downloads.sourceforge.net/mx4j/%{srcname}-%{version}-src.tar.gz
 # Source0-md5:	1c01f620c21efb0a84c3105c064b9047
 Patch0:		%{name}-sourcetarget.patch
 URL:		http://mx4j.sourceforge.net/
 BuildRequires:	ant >= 1.7
 BuildRequires:	ant-trax
-BuildRequires:	axis
-BuildRequires:	jaf
 BuildRequires:	jakarta-bcel >= 5.0
+BuildRequires:	java(jaf)
+BuildRequires:	java(javamail) >= 1.2
+BuildRequires:	java(jce) >= 1.2.2
+BuildRequires:	java(jsse) >= 1.0.2
+BuildRequires:	java(servlet)
+BuildRequires:	java-axis
 BuildRequires:	java-commons-logging >= 1.0.1
 BuildRequires:	java-gcj-compat-devel
-%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
 %{!?with_java_sun:BuildRequires:        java-gnu-classpath}
 BuildRequires:	java-hessian
 BuildRequires:	java-junit >= 3.8
 BuildRequires:	java-log4j >= 1.2.7
-%{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-xml-commons
-BuildRequires:	javamail >= 1.2
 BuildRequires:	jaxp_transform_impl
-BuildRequires:	jce >= 1.2.2
+BuildRequires:	jdk
 BuildRequires:	jpackage-utils
-BuildRequires:	jsse >= 1.0.2
 BuildRequires:	jython >= 2.1
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	servlet
 Provides:	jmxri
 Obsoletes:	openjmx
 BuildArch:	noarch
