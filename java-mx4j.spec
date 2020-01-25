@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_with	doc	# build docs (broken)
 
-%include	/usr/lib/rpm/macros.java
 
 %define		srcname	mx4j
 Summary:	Open source implementation of JMX Java API
